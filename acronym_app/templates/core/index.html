@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<div class="row">
+    <p>
+        This app helps you search for any cFMS acronym you want to know about.
+    </p>
+<div>
+
+<form class="row g-3" action="{% url 'core:index' %}" method="post">
+    {% csrf_token %}
+    <div class="col-md-3">
+        <input class="form-control" type="text" name="acronym" placeholder="Enter acronym to get its details...">
+    </div>
+    <div class="col-md-3">
+        <button class="btn btn-primary" type="submit">Search</button>
+    </div>
+</form>
+
+{% if acronym_details != "" %}
+
+<div class="card" style="margin-top: 30px;">
+    <div class="card-header">
+        {% if acronym_details == "nf" %}
+        Sorry &#128531, no data found!
+    </div>
+        {% else %}
+        {{acronym_details.expanded_form}}
+    </div>
+    <div class="card-body">
+        {{acronym_details.about}}
+    </div>
+    {% endif %}
+</div>
+{% endif %}
+
+{% endblock content %}
